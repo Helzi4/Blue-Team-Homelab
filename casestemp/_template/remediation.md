@@ -1,0 +1,5 @@
+- Contain: {{CONTAINMENT}}
+- Credentials: {{CREDS_ACTION}}
+- Cleanup: {{CLEANUP_ACTION}}
+- Hardening: {{HARDENING_ACTION}}
+- Tuning: {{TUNING_ACTION}}
