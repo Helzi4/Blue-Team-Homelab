@@ -1,0 +1,78 @@
+Log Name:      Microsoft-Windows-Sysmon/Operational
+Source:        Microsoft-Windows-Sysmon
+Date:          3/5/2026 2:29:49 PM
+Event ID:      1
+Task Category: Process Create (rule: ProcessCreate)
+Level:         Information
+Keywords:      
+User:          SYSTEM
+Computer:      WinTest10.arata.lab
+Description:
+Process Create:
+RuleName: -
+UtcTime: 2026-03-05 12:29:49.895
+ProcessGuid: {b47c3a3b-773d-69a9-c70d-000000001200}
+ProcessId: 3664
+Image: C:\Windows\System32\notepad.exe
+FileVersion: 10.0.19041.5794 (WinBuild.160101.0800)
+Description: Notepad
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: NOTEPAD.EXE
+CommandLine: "C:\Windows\system32\notepad.exe" 
+CurrentDirectory: C:\Users\Administrator\
+User: ARATA\Administrator
+LogonGuid: {b47c3a3b-6de8-69a9-645e-520300000000}
+LogonId: 0x3525E64
+TerminalSessionId: 2
+IntegrityLevel: High
+Hashes: MD5=6F51BCABF1B2B34AD7E670AEE6DA451F,SHA256=DA5807BB0997CC6B5132950EC87EDA2B33B1AC4533CF1F7A22A6F3B576ED7C5B,IMPHASH=09ED737A03DB7295BF734A9953F6EB5E
+ParentProcessGuid: {b47c3a3b-773d-69a9-c60d-000000001200}
+ParentProcessId: 9976
+ParentImage: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+ParentCommandLine: "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -NoP -W Hidden -Enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA
+ParentUser: ARATA\Administrator
+Event Xml:
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" />
+    <EventID>1</EventID>
+    <Version>5</Version>
+    <Level>4</Level>
+    <Task>1</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x8000000000000000</Keywords>
+    <TimeCreated SystemTime="2026-03-05T12:29:49.9018851Z" />
+    <EventRecordID>27692</EventRecordID>
+    <Correlation />
+    <Execution ProcessID="2952" ThreadID="4600" />
+    <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+    <Computer>WinTest10.arata.lab</Computer>
+    <Security UserID="S-1-5-18" />
+  </System>
+  <EventData>
+    <Data Name="RuleName">-</Data>
+    <Data Name="UtcTime">2026-03-05 12:29:49.895</Data>
+    <Data Name="ProcessGuid">{b47c3a3b-773d-69a9-c70d-000000001200}</Data>
+    <Data Name="ProcessId">3664</Data>
+    <Data Name="Image">C:\Windows\System32\notepad.exe</Data>
+    <Data Name="FileVersion">10.0.19041.5794 (WinBuild.160101.0800)</Data>
+    <Data Name="Description">Notepad</Data>
+    <Data Name="Product">Microsoft® Windows® Operating System</Data>
+    <Data Name="Company">Microsoft Corporation</Data>
+    <Data Name="OriginalFileName">NOTEPAD.EXE</Data>
+    <Data Name="CommandLine">"C:\Windows\system32\notepad.exe" </Data>
+    <Data Name="CurrentDirectory">C:\Users\Administrator\</Data>
+    <Data Name="User">ARATA\Administrator</Data>
+    <Data Name="LogonGuid">{b47c3a3b-6de8-69a9-645e-520300000000}</Data>
+    <Data Name="LogonId">0x3525e64</Data>
+    <Data Name="TerminalSessionId">2</Data>
+    <Data Name="IntegrityLevel">High</Data>
+    <Data Name="Hashes">MD5=6F51BCABF1B2B34AD7E670AEE6DA451F,SHA256=DA5807BB0997CC6B5132950EC87EDA2B33B1AC4533CF1F7A22A6F3B576ED7C5B,IMPHASH=09ED737A03DB7295BF734A9953F6EB5E</Data>
+    <Data Name="ParentProcessGuid">{b47c3a3b-773d-69a9-c60d-000000001200}</Data>
+    <Data Name="ParentProcessId">9976</Data>
+    <Data Name="ParentImage">C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Data>
+    <Data Name="ParentCommandLine">"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" -NoP -W Hidden -Enc UwB0AGEAcgB0AC0AUAByAG8AYwBlAHMAcwAgAG4AbwB0AGUAcABhAGQA</Data>
+    <Data Name="ParentUser">ARATA\Administrator</Data>
+  </EventData>
+</Event>
