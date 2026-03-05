@@ -1,58 +1,84 @@
 # Blue Team Homelab (SOC / DFIR)
-Enterprise-like homelab for SOC Analyst practice and a public case portfolio
 
-## What this repo is
-This repository documents a blue-team focused lab and a set of repeatable incident-style cases.
-Each case follows the same workflow:
-attack simulation (safe) -> detection -> triage -> investigation -> remediation -> rollback
+Hi, I’m Arata. This repo is my SOC Analyst portfolio built around an enterprise-style homelab and a set of repeatable incident cases. I use it to practice the day-to-day SOC workflow and to show how I think, what I collect, and how I justify conclusions with evidence.
 
-No external exposure of lab services. Access is only internal or via VPN.
+If you are hiring, the fastest way to review me is
+1) read the architecture notes
+2) open a case folder under `cases/`
+3) check the evidence and the Velociraptor collections that support the writeup
 
-## Lab snapshot
-| Area | Component | Purpose |
-| --- | --- | --- |
-| Hypervisor | Proxmox | Virtualization and snapshots for repeatable cases |
-| Network edge | FortiGate 40F | VLAN segmentation, policy enforcement, traffic logging, SSL-VPN |
-| Identity | Windows Server 2022 DC01 (arata.lab) | AD DS, DNS, GPO, LDAPS, certificate services |
-| SIEM | Wazuh | Log collection, correlation, dashboards |
-| DFIR | Velociraptor | Live response, hunts, artifact-based collections |
-| EDR | LimaCharlie | Endpoint telemetry and detections |
-| Endpoints | Windows clients | Victims for realistic SOC scenarios |
-| Attack host | Kali (isolated) | Safe simulation source for case generation |
+## What I am building
+A realistic blue team environment with clear segmentation, identity, endpoint telemetry, and DFIR tooling. I focus on practical detection engineering, triage, investigation, and response steps that a SOC analyst actually does.
+
+Everything is internal. No services are exposed to the internet. Access is only inside the lab or through VPN.
+
+## Stack
+Compute
+Proxmox VE for virtualization and snapshots
+
+Network
+FortiGate 40F for VLAN segmentation, policy enforcement, and traffic logging
+
+Identity
+Windows Server 2022 DC (arata.lab) with DNS, GPO, LDAPS, AD CS
+
+Security platforms
+Wazuh for SIEM workflows and dashboards  
+LimaCharlie for EDR telemetry and detections  
+Velociraptor for DFIR collections, hunts, and evidence gathering
+
+Endpoints
+Domain-joined Windows clients with Sysmon and Defender enabled
+
+Attack simulation
+Kali in an isolated segment used only for safe simulation and case generation
 
 ## Network layout
-| Segment | CIDR | Notes |
-| --- | --- | --- |
-| MGMT | 192.168.50.0/24 | FortiGate and Proxmox management |
-| WORK | 10.10.10.0/24 | SOC stack and domain-joined endpoints |
-| HOME | 10.20.20.0/24 | Compromised-host simulation zone (Kali lives here) |
+MGMT 192.168.50.0/24  
+WORK 10.10.10.0/24  
+HOME 10.20.20.0/24
 
-Policy intent: allow only what is needed for case generation, keep SOC infrastructure protected, log allow and deny for evidence.
+Design intent
+SOC infrastructure stays protected
+Simulation traffic is controlled and logged
+Cases are repeatable and evidence is preserved
 
-## Telemetry sources used in cases
-| Source | Where it appears | Why it matters |
-| --- | --- | --- |
-| FortiGate traffic logs | Network perspective | Source and destination validation, segmentation evidence |
-| Windows Security logs | Host perspective | Logon events, user and privilege changes |
-| Sysmon | Host process visibility | Process tree, command line, persistence signals |
-| Wazuh | SIEM workflow | Alerting, dashboards, correlation |
-| LimaCharlie | EDR workflow | Detection signals, timeline pivoting |
-| Velociraptor | DFIR workflow | Evidence collection, hunts, artifact queries |
+## What I practice here
+Detection engineering
+I generate signals safely, validate telemetry, and tune rules to reduce noise while keeping coverage.
 
-## How to use this repo
-### Add a new case (fast path)
-1) Copy folder `cases/_template` into `cases/NN-short-title`
-2) Update text inside scenario, detection, triage, investigation, remediation, rollback
-3) Put screenshots and exports into `cases/NN-short-title/evidence/`
-4) Keep the case repeatable using VM snapshots
+Triage
+I confirm scope, source, affected hosts, timestamps, and initial severity using SIEM and EDR pivots.
 
-### Evidence quality bar
-Minimum evidence set per case:
-FortiGate log view for src and dst
+Investigation
+I collect artifacts with Velociraptor and correlate them with logs to build a timeline and answer what happened, how it happened, and what changed.
+
+Remediation
+I document containment and cleanup actions I would take in production, plus improvements to prevent recurrence.
+
+Repeatability
+I snapshot victims before each run and document rollback steps so the same case can be reproduced.
+
+## Repo structure
+`architecture/`  
+High level design, segmentation intent, telemetry sources
+
+`cases/`  
+Each case is a compact IR-style writeup with the same file set
+
+`cases/_template/`  
+My template used to create new cases quickly and consistently
+
+Each case follows the same flow
+scenario -> detection -> triage -> investigation -> remediation -> rollback -> evidence
+
+## Evidence standards
+For every case I try to capture at least
+FortiGate traffic log showing src, dst, and time
 one relevant Windows Security event
 one relevant Sysmon event
-one Wazuh or LimaCharlie view showing the signal
-one Velociraptor collection result that supports the conclusion
+a Wazuh or LimaCharlie view showing the signal
+a Velociraptor collection result that supports the conclusion
 
 ## Case index
 | ID | Title | Status |
@@ -60,10 +86,13 @@ one Velociraptor collection result that supports the conclusion
 | 01 | RDP logon + Encoded PowerShell (benign) | In progress |
 
 ## Roadmap
-Goal: 20 realistic cases with safe simulations, no malware, no destructive testing.
-Coverage targets: execution, persistence, identity and logon, discovery, lateral movement, defense evasion, DFIR collections.
+Goal: 20 realistic SOC cases using safe simulations only, no malware, no destructive testing.
+Coverage targets: execution, persistence, identity and logon activity, discovery, lateral movement patterns, defense evasion signals, DFIR collections.
 
-## Safety and constraints
-No services exposed to the internet
-No bridging office network into the lab domain
-Snapshots before critical changes and before each case
+## How to review quickly
+Start with
+`architecture/`  
+then open
+`cases/01-rdp-encoded-powershell/`
+
+If you want a deeper review, look at the template folder to see how consistent the case format is across the repo.
