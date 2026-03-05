@@ -9,7 +9,8 @@
 - Telemetry: Sysmon, Security, Wazuh, LimaCharlie, Velociraptor, FortiGate
 
 ## Steps (safe)
-1) {{STEP_1}}
+1) ![Uploading image.png…]()
+
 2) {{STEP_2}}
 3) {{STEP_3_OPTIONAL}}
 
