@@ -1,0 +1,117 @@
+Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Date:          3/5/2026 2:29:20 PM
+Event ID:      4624
+Task Category: Logon
+Level:         Information
+Keywords:      Audit Success
+User:          N/A
+Computer:      WinTest10.arata.lab
+Description:
+An account was successfully logged on.
+
+Subject:
+	Security ID:		SYSTEM
+	Account Name:		WINTEST10$
+	Account Domain:		ARATA
+	Logon ID:		0x3E7
+
+Logon Information:
+	Logon Type:		10
+	Restricted Admin Mode:	No
+	Virtual Account:		No
+	Elevated Token:		Yes
+
+Impersonation Level:		Impersonation
+
+New Logon:
+	Security ID:		ARATA\Administrator
+	Account Name:		Administrator
+	Account Domain:		ARATA
+	Logon ID:		0x389F067
+	Linked Logon ID:		0x0
+	Network Account Name:	-
+	Network Account Domain:	-
+	Logon GUID:		{2efc888b-aeff-9d57-c009-b55bf31b41f8}
+
+Process Information:
+	Process ID:		0x6f0
+	Process Name:		C:\Windows\System32\svchost.exe
+
+Network Information:
+	Workstation Name:	WINTEST10
+	Source Network Address:	10.20.20.10
+	Source Port:		0
+
+Detailed Authentication Information:
+	Logon Process:		User32 
+	Authentication Package:	Negotiate
+	Transited Services:	-
+	Package Name (NTLM only):	-
+	Key Length:		0
+
+This event is generated when a logon session is created. It is generated on the computer that was accessed.
+
+The subject fields indicate the account on the local system which requested the logon. This is most commonly a service such as the Server service, or a local process such as Winlogon.exe or Services.exe.
+
+The logon type field indicates the kind of logon that occurred. The most common types are 2 (interactive) and 3 (network).
+
+The New Logon fields indicate the account for whom the new logon was created, i.e. the account that was logged on.
+
+The network fields indicate where a remote logon request originated. Workstation name is not always available and may be left blank in some cases.
+
+The impersonation level field indicates the extent to which a process in the logon session can impersonate.
+
+The authentication information fields provide detailed information about this specific logon request.
+	- Logon GUID is a unique identifier that can be used to correlate this event with a KDC event.
+	- Transited services indicate which intermediate services have participated in this logon request.
+	- Package name indicates which sub-protocol was used among the NTLM protocols.
+	- Key length indicates the length of the generated session key. This will be 0 if no session key was requested.
+Event Xml:
+<Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+  <System>
+    <Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-a5ba-3e3b0328c30d}" />
+    <EventID>4624</EventID>
+    <Version>2</Version>
+    <Level>0</Level>
+    <Task>12544</Task>
+    <Opcode>0</Opcode>
+    <Keywords>0x8020000000000000</Keywords>
+    <TimeCreated SystemTime="2026-03-05T12:29:20.0881933Z" />
+    <EventRecordID>33830</EventRecordID>
+    <Correlation ActivityID="{e587b6d4-aaf5-0000-9db8-87e5f5aadc01}" />
+    <Execution ProcessID="632" ThreadID="4376" />
+    <Channel>Security</Channel>
+    <Computer>WinTest10.arata.lab</Computer>
+    <Security />
+  </System>
+  <EventData>
+    <Data Name="SubjectUserSid">S-1-5-18</Data>
+    <Data Name="SubjectUserName">WINTEST10$</Data>
+    <Data Name="SubjectDomainName">ARATA</Data>
+    <Data Name="SubjectLogonId">0x3e7</Data>
+    <Data Name="TargetUserSid">S-1-5-21-3218448708-2957116947-1066027815-500</Data>
+    <Data Name="TargetUserName">Administrator</Data>
+    <Data Name="TargetDomainName">ARATA</Data>
+    <Data Name="TargetLogonId">0x389f067</Data>
+    <Data Name="LogonType">10</Data>
+    <Data Name="LogonProcessName">User32 </Data>
+    <Data Name="AuthenticationPackageName">Negotiate</Data>
+    <Data Name="WorkstationName">WINTEST10</Data>
+    <Data Name="LogonGuid">{2efc888b-aeff-9d57-c009-b55bf31b41f8}</Data>
+    <Data Name="TransmittedServices">-</Data>
+    <Data Name="LmPackageName">-</Data>
+    <Data Name="KeyLength">0</Data>
+    <Data Name="ProcessId">0x6f0</Data>
+    <Data Name="ProcessName">C:\Windows\System32\svchost.exe</Data>
+    <Data Name="IpAddress">10.20.20.10</Data>
+    <Data Name="IpPort">0</Data>
+    <Data Name="ImpersonationLevel">%%1833</Data>
+    <Data Name="RestrictedAdminMode">%%1843</Data>
+    <Data Name="TargetOutboundUserName">-</Data>
+    <Data Name="TargetOutboundDomainName">-</Data>
+    <Data Name="VirtualAccount">%%1843</Data>
+    <Data Name="TargetLinkedLogonId">0x0</Data>
+    <Data Name="ElevatedToken">%%1842</Data>
+  </EventData>
+</Event>
