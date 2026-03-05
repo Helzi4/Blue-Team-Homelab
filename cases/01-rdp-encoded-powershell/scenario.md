@@ -9,7 +9,7 @@
 - Telemetry: Sysmon, Security, Wazuh, LimaCharlie, Velociraptor, FortiGate
 
 ## Steps (safe)
-1) ![WitTest10 host and time info](./cases/temp_photo/image.png)
+1) ![WitTest10 host and time info](/cases/temp_photo/image.png)
 
 2) {{STEP_2}}
 3) {{STEP_3_OPTIONAL}}
