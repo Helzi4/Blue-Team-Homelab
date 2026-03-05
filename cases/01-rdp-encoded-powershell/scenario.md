@@ -1,20 +1,21 @@
-# Case {{ID}} — {{TITLE}}
+# Case 01 — RDP logon + Encoded PowerShell (benign)
 
 ## Goal
-{{ONE_LINE_GOAL}}
+Simulate a common SOC pattern: interactive remote logon followed by suspicious PowerShell encoded execution.
 
 ## Environment
-- Attacker/Source: {{SRC_HOST}} ({{SRC_IP}})
-- Victim: {{VICTIM_HOST}} ({{VICTIM_IP}}, {{DOMAIN}})
-- Telemetry: Sysmon, Security, Wazuh, LimaCharlie, Velociraptor, FortiGate
+Source: Kali 10.20.20.10 (HOME)
+Victim: WinTest10 10.10.10.100 (WORK), domain arata.lab
+Telemetry: Windows Security, Sysmon, Wazuh, LimaCharlie, Velociraptor, FortiGate
 
 ## Steps (safe)
-1) ![WitTest10 host and time info](/cases/temp_photo/image.png)
-
-2) {{STEP_2}}
-3) {{STEP_3_OPTIONAL}}
+1) RDP logon from 10.20.20.10 to WinTest10
+2) Execute benign encoded PowerShell to start notepad
+3) Collect evidence from SIEM, EDR, DFIR tools
 
 ## Expected signals
-- Security: {{SECURITY_EVENTS}}
-- Sysmon: {{SYSMON_EVENTS}}
-- Network: FortiGate src={{SRC_IP}} dst={{VICTIM_IP}}
+Security: 4624 (LogonType 10, Source Network Address 10.20.20.10)
+Sysmon: Event ID 1 (powershell.exe with -Enc in commandLine)
+Wazuh: Sysmon event mapped to data.win.eventdata.commandLine
+EDR: LimaCharlie timeline/detection for encoded PowerShell
+Network: FortiGate traffic showing src/dst activity during the case window
