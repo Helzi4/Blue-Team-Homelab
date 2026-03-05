@@ -1,7 +1,9 @@
 # Rollback
 
-Preferred: revert snapshot {{SNAPSHOT_NAME}} on {{VICTIM_HOST}}.
+Preferred
+Revert WinTest10 snapshot pre-case01.
 
-If no snapshot:
-- Remove created artifacts: {{ARTIFACTS_TO_REMOVE}}
-- Verify clean state: no tasks/services/new users; agents reporting OK.
+If no snapshot
+- Close notepad (benign payload)
+- Confirm no new tasks/services/users were created
+- Verify telemetry is healthy: Wazuh agent, LimaCharlie sensor, Velociraptor client online
