@@ -66,7 +66,7 @@ Each case is a compact IR-style writeup with the same file set
 My template used to create new cases quickly and consistently
 
 Each case follows the same flow
-scenario -> detection -> triage -> investigation -> remediation -> rollback -> evidence
+scenario -> detection -> triage -> investigation -> remediation -> rollback -> evidence.
 
 ## Evidence standards
 For every case I try to capture at least
