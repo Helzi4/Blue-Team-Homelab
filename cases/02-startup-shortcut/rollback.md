@@ -1,7 +1,8 @@
 # Rollback
 
-Preferred: revert snapshot {{SNAPSHOT_NAME}} on {{VICTIM_HOST}}.
+Not performed for this case.
+We intentionally kept the Startup entry to preserve state after validation.
 
-If no snapshot:
-- Remove created artifacts: {{ARTIFACTS_TO_REMOVE}}
-- Verify clean state: no tasks/services/new users; agents reporting OK.
+If rollback is needed later
+Revert snapshot pre-case02 or manually delete:
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\AutoStart - TG.lnk
