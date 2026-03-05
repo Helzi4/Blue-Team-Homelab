@@ -9,7 +9,7 @@
 - Telemetry: Sysmon, Security, Wazuh, LimaCharlie, Velociraptor, FortiGate
 
 ## Steps (safe)
-1) ![alt text](image.png)
+1) [](./cases/temp_photo/image.png)
 
 2) {{STEP_2}}
 3) {{STEP_3_OPTIONAL}}
