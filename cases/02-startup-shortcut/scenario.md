@@ -1,19 +1,15 @@
-# Case {{ID}} — {{TITLE}}
+# Case 02 — Startup persistence via user shortcut (Telegram Web)
 
-## Goal
-{{ONE_LINE_GOAL}}
+Goal
+Validate and investigate user-level persistence created by a typical employee: adding an app shortcut to Startup for convenience.
 
-## Environment
-- Attacker/Source: {{SRC_HOST}} ({{SRC_IP}})
-- Victim: {{VICTIM_HOST}} ({{VICTIM_IP}}, {{DOMAIN}})
-- Telemetry: Sysmon, Security, Wazuh, LimaCharlie, Velociraptor, FortiGate
+Environment
+Victim: WinTest10 (wintest10.arata.lab), user: WINTEST10\Admin
+Persistence location: User Startup folder (shell:startup)
+Telemetry: Sysmon, Wazuh, LimaCharlie, Velociraptor
 
-## Steps (safe)
-1) {{STEP_1}}
-2) {{STEP_2}}
-3) {{STEP_3_OPTIONAL}}
+Start
+Thursday, March 5, 2026 6:21:28 PM
 
-## Expected signals
-- Security: {{SECURITY_EVENTS}}
-- Sysmon: {{SYSMON_EVENTS}}
-- Network: FortiGate src={{SRC_IP}} dst={{VICTIM_IP}}
+End
+Persistence confirmed and attributed to the logged-in user. No removal performed (user-confirmed change).
