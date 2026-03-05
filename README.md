@@ -59,10 +59,6 @@ I document containment and cleanup actions I would take in production, plus impr
 Repeatability
 I snapshot victims before each run and document rollback steps so the same case can be reproduced.
 
-## Repo structure
-`architecture/`  
-High level design, segmentation intent, telemetry sources
-
 `cases/`  
 Each case is a compact IR-style writeup with the same file set
 
@@ -80,19 +76,8 @@ one relevant Sysmon event
 a Wazuh or LimaCharlie view showing the signal
 a Velociraptor collection result that supports the conclusion
 
-## Case index
-| ID | Title | Status |
-| --- | --- | --- |
-| 01 | RDP logon + Encoded PowerShell (benign) | In progress |
-
 ## Roadmap
 Goal: 20 realistic SOC cases using safe simulations only, no malware, no destructive testing.
 Coverage targets: execution, persistence, identity and logon activity, discovery, lateral movement patterns, defense evasion signals, DFIR collections.
-
-## How to review quickly
-Start with
-`architecture/`  
-then open
-`cases/01-rdp-encoded-powershell/`
 
 If you want a deeper review, look at the template folder to see how consistent the case format is across the repo.
