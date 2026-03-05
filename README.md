@@ -1,81 +1,69 @@
-# Blue Team Homelab (SOC / DFIR) — Proxmox + OPNsense + Wazuh
+# Blue Team Homelab (SOC / DFIR)
+Enterprise-like homelab for SOC Analyst practice and a public case portfolio
 
-A hands-on SOC/DFIR homelab built to practice detection engineering, log analysis, and incident investigations.
-The focus is on producing repeatable case reports (attack → alert → investigation → tuning) and documenting the lab design.
+## What this repo is
+This repository documents a blue-team focused lab and a set of repeatable incident-style cases.
+Each case follows the same workflow:
+attack simulation (safe) -> detection -> triage -> investigation -> remediation -> rollback
 
----
+No external exposure of lab services. Access is only internal or via VPN.
 
-## Goals
+## Lab snapshot
+| Area | Component | Purpose |
+| --- | --- | --- |
+| Hypervisor | Proxmox | Virtualization and snapshots for repeatable cases |
+| Network edge | FortiGate 40F | VLAN segmentation, policy enforcement, traffic logging, SSL-VPN |
+| Identity | Windows Server 2022 DC01 (arata.lab) | AD DS, DNS, GPO, LDAPS, certificate services |
+| SIEM | Wazuh | Log collection, correlation, dashboards |
+| DFIR | Velociraptor | Live response, hunts, artifact-based collections |
+| EDR | LimaCharlie | Endpoint telemetry and detections |
+| Endpoints | Windows clients | Victims for realistic SOC scenarios |
+| Attack host | Kali (isolated) | Safe simulation source for case generation |
 
-- Build a realistic blue-team environment on bare metal (no cloud dependencies).
-- Collect host + network telemetry and turn it into actionable detections.
-- Practice investigations: timelines, triage, pivoting, and evidence-driven analysis.
-- Maintain a portfolio: detections, tuning notes, and case reports.
+## Network layout
+| Segment | CIDR | Notes |
+| --- | --- | --- |
+| MGMT | 192.168.50.0/24 | FortiGate and Proxmox management |
+| WORK | 10.10.10.0/24 | SOC stack and domain-joined endpoints |
+| HOME | 10.20.20.0/24 | Compromised-host simulation zone (Kali lives here) |
 
----
+Policy intent: allow only what is needed for case generation, keep SOC infrastructure protected, log allow and deny for evidence.
 
-## High-Level Architecture
+## Telemetry sources used in cases
+| Source | Where it appears | Why it matters |
+| --- | --- | --- |
+| FortiGate traffic logs | Network perspective | Source and destination validation, segmentation evidence |
+| Windows Security logs | Host perspective | Logon events, user and privilege changes |
+| Sysmon | Host process visibility | Process tree, command line, persistence signals |
+| Wazuh | SIEM workflow | Alerting, dashboards, correlation |
+| LimaCharlie | EDR workflow | Detection signals, timeline pivoting |
+| Velociraptor | DFIR workflow | Evidence collection, hunts, artifact queries |
 
-**Hypervisor:** Proxmox VE  
-**Edge:** OPNsense (routing, firewall, VPN)  
-**SOC Core:** Wazuh Manager + Dashboard  
-**Endpoints:** Windows / Linux VMs
+## How to use this repo
+### Add a new case (fast path)
+1) Copy folder `cases/_template` into `cases/NN-short-title`
+2) Update text inside scenario, detection, triage, investigation, remediation, rollback
+3) Put screenshots and exports into `cases/NN-short-title/evidence/`
+4) Keep the case repeatable using VM snapshots
 
-### Network Layout (sanitized example)
-- **WAN / upstream network:** `10.0.0.0/24`
-- **Lab LAN:** `10.20.20.0/24`
-- **SOC server (Wazuh Manager):** `10.20.20.10`
-- **VPN subnet (WireGuard):** `10.6.0.0/24`
+### Evidence quality bar
+Minimum evidence set per case:
+FortiGate log view for src and dst
+one relevant Windows Security event
+one relevant Sysmon event
+one Wazuh or LimaCharlie view showing the signal
+one Velociraptor collection result that supports the conclusion
 
-> Note: All IP ranges shown here are examples. Real environment details are intentionally omitted.
+## Case index
+| ID | Title | Status |
+| --- | --- | --- |
+| 01 | RDP logon + Encoded PowerShell (benign) | In progress |
 
-### Remote Access Model
-WireGuard is hosted on OPNsense and provides access to the lab LAN.
-The lab is not exposed directly to the public internet; access is performed through a secured VPN entry path.
+## Roadmap
+Goal: 20 realistic cases with safe simulations, no malware, no destructive testing.
+Coverage targets: execution, persistence, identity and logon, discovery, lateral movement, defense evasion, DFIR collections.
 
----
-
-## What’s Inside
-
-### OPNsense (Edge)
-- Routes traffic between WAN and Lab LAN
-- Stateful firewall
-- WireGuard for secure remote access
-- (Planned) Forward network telemetry (firewall/DHCP/DNS) into the SOC stack
-
-### Wazuh (SOC Core)
-- Centralized event collection and alerting
-- Dashboard for hunting and analytics
-- Agents on endpoints:
-  - **Windows:** Security/System/Application + Sysmon (Operational)
-  - **Linux:** auth/journal (+ auditd where useful)
-
----
-
-## Repository Structure
-
-- `docs/` — architecture notes, diagrams, data flows
-- `detections/` — custom rules/decoders, Sigma notes, tuning
-- `cases/` — investigation write-ups (attack → alert → investigation → tuning)
-- `infra/` — deployment notes and automation (later: Ansible/IaC)
-
----
-
-## Current Status
-
-- [x] Proxmox + segmented lab networking
-- [x] OPNsense routing/firewall baseline
-- [x] WireGuard access into Lab LAN
-- [x] Wazuh deployed and reachable
-- [x] First Windows endpoint enrolled (events + Sysmon visible)
-- [ ] Add a Linux endpoint agent
-- [ ] Ingest OPNsense logs into Wazuh (syslog)
-- [ ] First case report: Windows persistence via Scheduled Task
-
----
-
-## Security Notes
-
-- This is a learning environment.
-- No private keys, passwords, tokens, or sensitive identifiers are stored in this repository.
-- Configuration examples are sanitized when necessary.
+## Safety and constraints
+No services exposed to the internet
+No bridging office network into the lab domain
+Snapshots before critical changes and before each case
