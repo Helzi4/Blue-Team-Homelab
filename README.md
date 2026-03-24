@@ -34,6 +34,7 @@ Attack simulation
 Kali in an isolated segment used only for safe simulation and case generation
 
 ## Network layout
+
 MGMT 192.168.50.0/24  
 WORK 10.10.10.0/24  
 HOME 10.20.20.0/24
