@@ -1,19 +1,10 @@
-# Case {{ID}} — {{TITLE}}
+# Scenario
 
-## Goal
-{{ONE_LINE_GOAL}}
+A Windows workstation (`10.10.10.100`) received multiple inbound connection attempts from an internal host (`10.20.20.10`) over a short time window.
 
-## Environment
-- Attacker/Source: {{SRC_HOST}} ({{SRC_IP}})
-- Victim: {{VICTIM_HOST}} ({{VICTIM_IP}}, {{DOMAIN}})
-- Telemetry: Sysmon, Security, Wazuh, LimaCharlie, Velociraptor, FortiGate
+The targeted services included:
+- DCE-RPC
+- SMB / SAMBA
+- RDP
 
-## Steps (safe)
-1) {{STEP_1}}
-2) {{STEP_2}}
-3) {{STEP_3_OPTIONAL}}
-
-## Expected signals
-- Security: {{SECURITY_EVENTS}}
-- Sysmon: {{SYSMON_EVENTS}}
-- Network: FortiGate src={{SRC_IP}} dst={{VICTIM_IP}}
+The goal of the investigation was to determine whether the activity was benign internal administration or suspicious internal reconnaissance consistent with network service discovery.

@@ -1,7 +1,5 @@
 # Rollback
 
-Preferred: revert snapshot {{SNAPSHOT_NAME}} on {{VICTIM_HOST}}.
+No rollback actions were required.
 
-If no snapshot:
-- Remove created artifacts: {{ARTIFACTS_TO_REMOVE}}
-- Verify clean state: no tasks/services/new users; agents reporting OK.
+No files were dropped, no persistence was created, and no system configuration changes were observed during the investigation window.

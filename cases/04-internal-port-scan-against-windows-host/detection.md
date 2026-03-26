@@ -1,15 +1,30 @@
 # Detection
 
-## Trigger
-{{WHAT_TRIGGERS_ALERT}}
+## Detection Logic
+This scenario can be detected by identifying:
 
-## Wazuh
-- Filter: agent={{VICTIM_HOST}}
-- Look for: {{WAZUH_LOOKFOR_1}}, {{WAZUH_LOOKFOR_2}}
+- one source host
+- one destination host
+- multiple destination services or ports
+- a short time window
+- Windows-oriented services such as:
+  - RPC
+  - SMB
+  - RDP
 
-## LimaCharlie
-- Rule/Signal: {{LC_RULE}}
-- Validate fields: {{LC_FIELDS}}
+## Primary Telemetry
+- FortiGate firewall logs
+- LimaCharlie endpoint network telemetry
 
-## Notes
-- Likely false positives: {{FP_NOTES}}
+## Detection Opportunities
+- Alert when an internal source touches multiple Windows service ports on a single host within a short interval
+- Increase priority when the source host is not part of known administrative infrastructure
+- Correlate firewall and endpoint network telemetry for higher confidence
+
+## Detection Tuning Note
+This pattern can be noisy in environments with legitimate admin tooling, vulnerability scanning, or management systems.
+
+To reduce false positives:
+- allowlist approved admin or scanner hosts
+- baseline expected internal scanning behavior
+- correlate with successful authentication or follow-on execution before escalating severity
