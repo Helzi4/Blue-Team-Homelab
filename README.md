@@ -1,84 +1,107 @@
 # Blue Team Homelab (SOC / DFIR)
 
-Hi, I’m Arata. This repo is my SOC Analyst portfolio built around an enterprise-style homelab and a set of repeatable incident cases. I use it to practice the day-to-day SOC workflow and to show how I think, what I collect, and how I justify conclusions with evidence.
+Enterprise-style Blue Team homelab focused on alert triage, investigation, evidence collection, and repeatable SOC case writeups.
 
-If you are hiring, the fastest way to review me is
-1) read the architecture notes
-2) open a case folder under `cases/`
-3) check the evidence and the Velociraptor collections that support the writeup
+## Scope
 
-## What I am building
-A realistic blue team environment with clear segmentation, identity, endpoint telemetry, and DFIR tooling. I focus on practical detection engineering, triage, investigation, and response steps that a SOC analyst actually does.
+Hi
 
-Everything is internal. No services are exposed to the internet. Access is only inside the lab or through VPN.
+This repository documents practical SOC / DFIR investigations built in a segmented internal lab.
 
-## Stack
-Compute
-Proxmox VE for virtualization and snapshots
+Core focus:
+- alert triage
+- Windows log analysis
+- endpoint telemetry correlation
+- host validation
+- containment and remediation logic
+- clear separation between confirmed facts and unconfirmed theory
 
-Network
-FortiGate 40F for VLAN segmentation, policy enforcement, and traffic logging
+## Lab Stack
 
-Identity
-Windows Server 2022 DC (arata.lab) with DNS, GPO, LDAPS, AD CS
+| Area | Technology |
+|---|---|
+| Virtualization | Proxmox VE |
+| Firewall / Segmentation | FortiGate 40F |
+| Identity | Windows Server 2022 Domain Controller |
+| SIEM | Wazuh |
+| EDR / Telemetry | LimaCharlie |
+| DFIR | Velociraptor |
+| Endpoint Telemetry | Sysmon |
+| Native Protection | Microsoft Defender |
+| Simulation Host | Kali Linux |
+| Endpoints | Domain-joined Windows clients |
 
-Security platforms
-Wazuh for SIEM workflows and dashboards  
-LimaCharlie for EDR telemetry and detections  
-Velociraptor for DFIR collections, hunts, and evidence gathering
+## Network Layout
 
-Endpoints
-Domain-joined Windows clients with Sysmon and Defender enabled
+| Segment | Subnet | Purpose |
+|---|---|---|
+| MGMT | 192.168.50.0/24 | Management and security infrastructure |
+| WORK | 10.10.10.0/24 | Windows endpoints and internal workstation activity |
+| HOME | 10.20.20.0/24 | Isolated simulation segment |
 
-Attack simulation
-Kali in an isolated segment used only for safe simulation and case generation
+## Investigation Method
 
-## Network layout
+Each case is documented with the same structure:
 
-MGMT 192.168.50.0/24  
-WORK 10.10.10.0/24  
-HOME 10.20.20.0/24
+- `scenario.md`
+- `detection.md`
+- `triage.md`
+- `investigation.md`
+- `remediation.md`
+- `rollback.md`
 
-Design intent
-SOC infrastructure stays protected
-Simulation traffic is controlled and logged
-Cases are repeatable and evidence is preserved
+Each writeup is built from actual lab telemetry and supporting screenshots.
 
-## What I practice here
-Detection engineering
-I generate signals safely, validate telemetry, and tune rules to reduce noise while keeping coverage.
+## Case Index
 
-Triage
-I confirm scope, source, affected hosts, timestamps, and initial severity using SIEM and EDR pivots.
+| ID | Case | Status | Primary Focus | Main Question Answered |
+|---|---|---|---|---|
+| 01 | RDP Encoded PowerShell | Complete | Remote logon + suspicious PowerShell execution | Was the remote PowerShell activity malicious or benign? |
+| 02 | Startup Shortcut | Complete | Persistence false positive investigation | Did the startup artifact represent real persistence or benign software behavior? |
+| 03 | Masqueraded PowerShell | Complete | Masquerading / suspicious process identity | Was the observed PowerShell-related process behavior deceptive or expected? |
+| 04 | Internal Port Scan Against Windows Host | Complete | Internal reconnaissance | Did the host experience suspicious internal discovery activity? |
+| 05 | Gmail Phishing Document Link | Complete | Phishing-style user interaction | Did the user interaction lead to confirmed compromise or only suspicious exposure? |
+| 06 | SMB Failed Logon Investigation | Complete | Authentication failures / password-spray-style investigation | Were the failed logons isolated mistakes or suspicious repeated unauthorized attempts? |
+| 07 | Local Admin Group Change | Complete | Privilege escalation / local admin rights change | Was local administrative access granted without validated authorization? |
 
-Investigation
-I collect artifacts with Velociraptor and correlate them with logs to build a timeline and answer what happened, how it happened, and what changed.
+## What the Cases Cover
 
-Remediation
-I document containment and cleanup actions I would take in production, plus improvements to prevent recurrence.
+| Category | Covered |
+|---|---|
+| Suspicious execution | Yes |
+| False positive investigation | Yes |
+| Process masquerading | Yes |
+| Internal reconnaissance | Yes |
+| Phishing-style activity | Yes |
+| Repeated failed authentication | Yes |
+| Privilege escalation | Yes |
 
-Repeatability
-I snapshot victims before each run and document rollback steps so the same case can be reproduced.
+## Evidence Sources Used
 
-`cases/`  
-Each case is a compact IR-style writeup with the same file set
+Depending on the case, evidence may include:
 
-`cases/_template/`  
-My template used to create new cases quickly and consistently
+- Wazuh alerts and event details
+- Windows Security Event Logs
+- Sysmon process and host telemetry
+- LimaCharlie process / endpoint context
+- FortiGate network logs
+- Velociraptor collections
+- local host verification
 
-Each case follows the same flow
-scenario -> detection -> triage -> investigation -> remediation -> rollback -> evidence.
+Not every case uses every tool. Evidence is included only when it adds value to the conclusion.
 
-## Evidence standards
-For every case I try to capture at least
-FortiGate traffic log showing src, dst, and time
-one relevant Windows Security event
-one relevant Sysmon event
-a Wazuh or LimaCharlie view showing the signal
-a Velociraptor collection result that supports the conclusion
+## Repository Layout
 
-## Roadmap
-Goal: 20 realistic SOC cases using safe simulations only, no malware, no destructive testing.
-Coverage targets: execution, persistence, identity and logon activity, discovery, lateral movement patterns, defense evasion signals, DFIR collections.
-
-If you want a deeper review, look at the template folder to see how consistent the case format is across the repo.
+```text
+.
+├── README.md
+└── cases/
+    ├── 01-rdp-encoded-powershell/
+    ├── 02-startup-shortcut/
+    ├── 03-masqueraded-powershell/
+    ├── 04-internal-port-scan-against-windows-host/
+    ├── 05-gmail-phishing-document-link/
+    ├── 06-smb-failed-logon-investigation/
+    ├── 07-local-admin-group-change/
+    ├── _template/
+    └── temp_photo/
